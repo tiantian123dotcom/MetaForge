@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MetaForge – Prompt Engineering Trainer</title>
+<style>
+  body {font-family: Arial, sans-serif; margin:0; padding:0;
+        background:#fff8e1; color:#333;}
+  header {background:#ff6600; color:#000; padding:1rem 2rem;}
+  main {padding:2rem;}
+  h1,h2,h3 {margin-top:0; color:#333;}
+  .card {background:#fff; padding:1rem 1.5rem; margin:1rem 0;
+         border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,.15);}
+  label {font-weight:bold; color:#000;}
+  select {margin-left:.5rem; padding:.25rem;}
+  table {width:100%; border-collapse:collapse; margin-top:1rem;}
+  th,td {border:1px solid #ccc; padding:.5rem; text-align:left;}
+  th {background:#ffe0b2;}
+  .level {font-size:1.1rem; font-weight:bold; color:#ff6600;}
+  footer {text-align:center; font-size:.85rem; padding:1rem; background:#f0f0f0;}
+  .reference {font-size:.8rem; color:#555;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>MetaForge</h1>
+  <p>Improve your prompt‑engineering skills with AI‑generated tasks.</p>
+</header>
+
+<main>
+  <div class="card">
+    <label for="levelSelect">Choose Bloom’s level:</label>
+    <select id="levelSelect">
+      <option value="1">Remember</option>
+      <option value="2">Understand</option>
+      <option value="3">Apply</option>
+      <option value="4">Analyze</option>
+      <option value="5">Evaluate</option>
+      <option value="6">Create</option>
+    </select>
+  </div>
+
+  <div class="card" id="taskCard">
+    <h2>Prompt Task</h2>
+    <p id="taskText">Select a level to see a task.</p>
+    <p class="level" id="levelDesc"></p>
+  </div>
+
+  <div class="card">
+    <h2>Evaluation Rubric</h2>
+    <p>Use the rubric below to score your prompt. Each criterion ranges from <strong>1 (below basic)</strong> to <strong>4 (advanced)</strong>.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Criterion</th>
+          <th>4‑point descriptions</th>
+          <th>RRL backing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Clarity of Prompt (Explicitness)</td>
+          <td>4 – fully explicit; … 1 – very vague</td>
+          <td>Jiang et al. 2023; Reynolds & McDonell 2021</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Specificity / Detail of Information</td>
+          <td>4 – exact details; … 1 – no details</td>
+          <td>Lee et al. 2022; Benotti & Cusack 2023</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Use of Prompt‑Engineering Strategies</td>
+          <td>4 – multiple strategies; … 1 – none</td>
+          <td>Shin et al. 2024; Jiang et al. 2023</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Alignment with Objectives / Academic Accuracy</td>
+          <td>4 – directly addresses objective; … 1 – misaligned</td>
+          <td>Jones & Hindle 2023; Lee & Bonner 2022</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Output Structure / Format Guidance</td>
+          <td>4 – explicit structure; … 1 – none</td>
+          <td>Shin et al. 2024; Zhou & Pan 2023</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Cognitive Demand / Higher‑Order Thinking</td>
+          <td>4 – analysis/synthesis/evaluation; … 1 – factual recall</td>
+          <td>Anderson & Krathwohl 2001; Jones & Hindle 2023</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="reference">
+      References:<br>
+      Anderson & Krathwohl (2001); Benotti & Cusack (2023); Jiang et al. (2023); Jones & Hindle (2023); Lee & Bonner (2022); Lee et al. (2022); Reynolds & McDonell (2021); Shin et al. (2024); Zhou & Pan (2023).
+    </p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 MetaForge prototype</p>
+</footer>
+
+<script>
+  const tasks = {
+    1: {
+      level: 'Remember',
+      text: 'List the steps involved in prompt engineering for a text‑summarization model.'
+    },
+    2: {
+      level: 'Understand',
+      text: 'Explain why specificity improves AI responses and give an example prompt.'
+    },
+    3: {
+      level: 'Apply',
+      text: 'Take a vague prompt ("Write about trees") and rewrite it to be more explicit.'
+    },
+    4: {
+      level: 'Analyze',
+      text: 'Compare these two prompts and identify why one yields a better summary:\n\n' +
+            'A) "Summarize the article." \n' +
+            'B) "Provide a 3‑sentence summary of the WSJ article on climate change, focusing on causes and effects."'
+    },
+    5: {
+      level: 'Evaluate',
+      text: 'Critique the following prompt and suggest improvements based on clarity and detail:\n' +
+            '"Tell me about World War II."'
+    },
+    6: {
+      level: 'Create',
+      text: 'Design a multi‑step prompt that asks an LLM to generate a lesson plan on photosynthesis, ' +
+            'including objectives, activities, and assessment questions.'
+    }
+  };
+
+  const select = document.getElementById('levelSelect');
+  const taskText = document.getElementById('taskText');
+  const levelDesc = document.getElementById('levelDesc');
+
+  select.addEventListener('change', () => {
+    const val = select.value;
+    const item = tasks[val];
+    taskText.textContent = item.text;
+    levelDesc.textContent = Level: ${item.level};
+  });
+
+  // initialize
+  select.dispatchEvent(new Event('change'));
+</script>
+
+</body>
+</html>
